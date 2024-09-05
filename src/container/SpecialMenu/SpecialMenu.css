@@ -17,6 +17,13 @@
     flex-direction: row;
 }
 
+.app__specialMenu-menu_section {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .app__specialMenu-menu_heading {
     display: flex;
     align-items: center;
@@ -60,6 +67,10 @@
     flex-direction: column;
     margin: 2rem 0;
     width: 80%;
+    /* align-items: center; */
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
 }
 
 @media screen and (min-width: 2000px) {

@@ -1,6 +1,6 @@
 import Navbar from './Navbar/Navbar';
 import SubHeading from './SubHeading/SubHeading';
-import MenuItem from './Menu/MenuItem'
+import MenuItem from '../container/Menu/MenuItem'
 
 export {
   Navbar,

@@ -1,11 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { SubHeading } from "../../components";
 import { images } from "../../constants";
 import "./Header.css";
 
 const Header = ({ isInValidLocation }) => {
+  const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const tableNumber = params.get("table");
+
+  const handleTrackOrderClick = () => {
+    navigate("/track-order");
+  };
 
   return (
     <div className="app__header app__wrapper section__padding vh-80" id="home">
@@ -29,9 +35,21 @@ const Header = ({ isInValidLocation }) => {
               Enjoy our complimentary snacks and beverages, thoughtfully curated
               for your refreshments.
             </p>
-            <button type="button" className="custom__button">
+            {/* <button type="button" className="custom__button">
               <a href="#menu">Explore Menu</a>
-            </button>
+            </button> */}
+            <div className="app__header-buttons">
+              <button type="button" className="custom__button">
+                <a href="#menu">Explore Menu</a>
+              </button>
+              <button
+                type="button"
+                className="custom__button track-order-button"
+                onClick={handleTrackOrderClick}
+              >
+                Track Order
+              </button>
+            </div>
           </>
         )}
       </div>
