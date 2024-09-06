@@ -218,8 +218,14 @@ const OrderTrackingPage = () => {
                 </div>
               )}
               <div className="dateContainer">
-                <p className="statusText">{getStatusText(singleOrder.status)}</p>
+                <p className="statusText">
+                  {getStatusText(singleOrder.status)}
+                </p>
                 <p className="date">
+                  {singleOrder.name}
+                  <br />
+                  {singleOrder.phoneNumber}
+                  <br />
                   {singleOrder.timestamp.toDate().toLocaleDateString()}
                 </p>
               </div>

@@ -157,6 +157,8 @@ const Navbar = ({ cartItems, setCartItems }) => {
   const [cartOverlay, setCartOverlay] = useState(false);
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [tableNumber, setTableNumber] = useState(null);
+  const [name, setName] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
 
   const getTotalQuantity = () =>
     Object.values(cartItems).reduce((total, item) => total + item.quantity, 0);
@@ -187,6 +189,8 @@ const Navbar = ({ cartItems, setCartItems }) => {
         items: orderItems,
         specialInstructions: specialInstructions || "",
         status: 1, // 1 for 'Placed'
+        name: name,
+        phoneNumber: phoneNumber,
         timestamp: new Date(),
       });
 
@@ -285,6 +289,20 @@ const Navbar = ({ cartItems, setCartItems }) => {
               onChange={(e) => setTableNumber(e.target.value)}
               placeholder="Enter Table Number"
             />
+            <input
+              required
+              className="cart__instructions cart__input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Name"
+            />
+            <input
+              required
+              className="cart__instructions cart__input"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Enter Phone Number"
+            />
             <textarea
               className="cart__instructions"
               value={specialInstructions}
@@ -293,7 +311,7 @@ const Navbar = ({ cartItems, setCartItems }) => {
             />
             <div className="cart__buttons">
               <button
-                disabled={!tableNumber}
+                disabled={!tableNumber || !name || !phoneNumber}
                 className="custom__button send__order-button"
                 onClick={handlePlaceOrder}
               >
