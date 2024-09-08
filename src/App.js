@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-
 import { Header } from "./container";
 import { Navbar } from "./components";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import SpecialMenu from "./container/SpecialMenu/SpecialMenu";
 import OrderTrackingPage from "./container/OrderTrackingPage/OrderTrackingPage";
+
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -37,7 +39,6 @@ const App = () => {
   }, []);
 
   const checkValidLocation = (latitude, longitude) => {
-    // Define your valid location range here
     const validLatitude = [17.4257427, 17.4401427];
     const validLongitude = [78.5111404, 78.5261404];
 
@@ -52,6 +53,11 @@ const App = () => {
 
   return (
     <Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+      />
       <Navbar cartItems={cartItems} setCartItems={setCartItems} />
       <Routes>
         <Route

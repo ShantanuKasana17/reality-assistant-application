@@ -177,6 +177,12 @@
   color: #888;
 }
 
+.cart__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .send__order-button {
   margin-top: 15px;
   padding: 10px 20px;

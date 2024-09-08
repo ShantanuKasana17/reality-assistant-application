@@ -182,6 +182,7 @@
 // export default SpecialMenu;
 import React, { useEffect, useState } from "react";
 import { SubHeading, MenuItem } from "../../components";
+import { toast } from "react-toastify";
 import "./SpecialMenu.css";
 import { db, collection, query, onSnapshot, where } from "../../firebase";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -231,6 +232,7 @@ const SpecialMenu = ({ cartItems, setCartItems }) => {
   const handleQuantityChange = (id, quantity, title, type) => {
     const newQuantity = Math.min(Math.max(parseInt(quantity) || 0, 0), 5);
     const updatedCartItems = { ...cartItems };
+    const oldQuantity = cartItems[id]?.quantity || 0;
 
     if (newQuantity > 0) {
       updatedCartItems[id] = { id, title, quantity: newQuantity, type };
@@ -239,6 +241,13 @@ const SpecialMenu = ({ cartItems, setCartItems }) => {
     }
 
     setCartItems(updatedCartItems);
+
+    // Show toast notification
+    if (newQuantity > oldQuantity) {
+      toast.success(`${title} has been added successfully to the cart`);
+    } else if (newQuantity < oldQuantity) {
+      toast.info(`${title} has been removed successfully from the cart`);
+    }
   };
 
   const renderMenuSection = (items, sectionTitle, showState, setShowState) => (

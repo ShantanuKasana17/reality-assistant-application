@@ -148,6 +148,7 @@ import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { BiDish } from "react-icons/bi";
+import { toast } from "react-toastify";
 import images from "../../constants/images";
 import "./Navbar.css";
 import { addDoc, collection, db } from "../../firebase";
@@ -165,7 +166,6 @@ const Navbar = ({ cartItems, setCartItems }) => {
 
   const handlePlaceOrder = async () => {
     const params = new URLSearchParams(window.location.search);
-    // const tableNumber = params.get("table");
 
     const orderItems = Object.values(cartItems)
       .filter(({ quantity }) => quantity > 0)
@@ -177,13 +177,20 @@ const Navbar = ({ cartItems, setCartItems }) => {
       }));
 
     if (orderItems.length === 0) {
-      alert("Please select at least one item");
+      toast.error("Please select at least one item");
+      return;
+    }
+
+    if (
+      !phoneNumber ||
+      phoneNumber.length !== 10 ||
+      !/^\d+$/.test(phoneNumber)
+    ) {
+      toast.error("Please enter a valid 10-digit phone number");
       return;
     }
 
     try {
-      // Here you would add the code to send the order to your backend
-      // For example:
       await addDoc(collection(db, "orders"), {
         tableNo: tableNumber,
         items: orderItems,
@@ -197,10 +204,10 @@ const Navbar = ({ cartItems, setCartItems }) => {
       setCartItems({});
       setSpecialInstructions("");
       setCartOverlay(false);
-      alert("Your order has been placed!");
+      toast.success("Your order has been placed successfully!");
     } catch (error) {
       console.error("Error placing order:", error);
-      alert("Failed to place order. Please try again.");
+      toast.error("Failed to place order. Please try again.");
     }
   };
 
@@ -208,6 +215,7 @@ const Navbar = ({ cartItems, setCartItems }) => {
     setCartItems({});
     setCartOverlay(false);
     setSpecialInstructions("");
+    toast.info("Your order has been cancelled.");
   };
 
   return (
@@ -301,7 +309,7 @@ const Navbar = ({ cartItems, setCartItems }) => {
               className="cart__instructions cart__input"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter Phone Number"
+              placeholder="Enter Phone Number (10 digits)"
             />
             <textarea
               className="cart__instructions"
@@ -311,7 +319,6 @@ const Navbar = ({ cartItems, setCartItems }) => {
             />
             <div className="cart__buttons">
               <button
-                disabled={!tableNumber || !name || !phoneNumber}
                 className="custom__button send__order-button"
                 onClick={handlePlaceOrder}
               >

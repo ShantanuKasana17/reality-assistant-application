@@ -86,7 +86,8 @@ const MenuItem = ({
   handleQuantityChange,
   quantity,
 }) => {
-  const isMaxQuantity = quantity >= 5;
+  const isWaterItem = type === "Water";
+  const isMaxQuantity = !isWaterItem && quantity >= 5;
   const isMinQuantity = quantity <= 0;
 
   // return (
